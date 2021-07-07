@@ -23,23 +23,6 @@ public class Login {
         return sc.nextLine();
     }
 
-    //Lua chon dang nhap hoac dang ky.
-    public void LoginOrRegistration(){
-        while (true){
-            System.out.println("1. Login.");
-            System.out.printf("Enter the valule:");
-           try{
-               int value = Integer.parseInt(sc.nextLine());
-               switch (value){
-                   case 1: login();
-                       break;
-                   default:System.out.println("Enter 1.");
-               }
-           }catch (Exception e) {
-               System.out.println("Enter 1 or 2.");
-           }
-        }
-    }
     private User loginAccount(){
         String user = user();
         String password = passWord();
@@ -51,7 +34,7 @@ public class Login {
         }
     }
     //dang nhap vao menu
-    private void login(){
+    public void login(){
         while (true) {
             User user = loginAccount();
             if(Check.checkUser(user.getUserName(),user.getPassWord())){
@@ -95,7 +78,7 @@ public class Login {
             }
             else{
                 System.out.println("UserName or PassWord false.");
-                LoginOrRegistration();
+                login();
             }
         }
     }

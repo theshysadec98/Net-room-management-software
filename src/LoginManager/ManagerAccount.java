@@ -14,7 +14,18 @@ public class ManagerAccount {
 
     private static String user(){
         System.out.println("User: ");
-        return sc.nextLine();
+        String name = sc.nextLine();
+        try{
+            if(!Check.validate(name,REGEX_USERNAME) ){
+                System.out.println("User name must have at least 1 character");
+                return user();
+            }
+            else return name;
+        }catch (Exception e){
+            System.out.println("Must start with a letter or number");
+            return user();
+        }
+
     }
     private static String passWord(){
         System.out.println("PassWord: ");
@@ -33,11 +44,11 @@ public class ManagerAccount {
                 switch (value){
                     case 1: AddRegistration();
                         break;
-                    case 2:
+                    case 2: Revision();
                         break;
-                    case 3:
+                    case 3: Delete();
                         break;
-                    case 4:
+                    case 4: showListAccount();
                         break;
                     default:
                         System.out.println("Choose 1, 2, 3 or 4.");
@@ -66,11 +77,31 @@ public class ManagerAccount {
             }
         }
     }
-    
-    private static void Revision(){
-        for (User i : listAccount){
 
+    private static void Revision(){
+        System.out.println("Enter the account name to edit: ");
+        String name = user();
+        for (User i : listAccount){
+            if(name.equals(i.getUserName())){
+                i.setUserName(user());
+                i.setPassWord(passWord());
+            }
+        }
+        IOReadAndWriteFile.Write(path, listAccount);
+    }
+    private static void Delete(){
+        System.out.println("Enter the account name to edit: ");
+        String name = user();
+        for (int i =0; i < listAccount.size(); i ++){
+            if(name.equals(listAccount.get(i).getUserName())){
+                listAccount.remove(i);
+            }
+        }
+        IOReadAndWriteFile.Write(path, listAccount);
+    }
+    private static void showListAccount(){
+        for (User i : listAccount){
+            System.out.println(i);
         }
     }
-
 }
